@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: face-classifier-deployment
+  labels:
+    app: face-classifier
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: face-classifier
+  template:
+    metadata:
+      labels:
+        app: face-classifier
+    spec:
+      containers:
+      - name: web-app
+        image: <YOUR_DOCKERHUB_USERNAME>/olivetti-classifier:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "250Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: face-classifier-service
+spec:
+  type: NodePort
+  selector:
+    app: face-classifier
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30080
