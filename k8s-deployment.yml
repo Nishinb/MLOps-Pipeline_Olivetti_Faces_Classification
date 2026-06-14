@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: web-app
-        image: <YOUR_DOCKERHUB_USERNAME>/olivetti-classifier:latest
+        image: heynishi/olivetti-classifier:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
